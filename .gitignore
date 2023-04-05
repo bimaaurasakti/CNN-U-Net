@@ -1,4 +1,5 @@
 dataset/
+preprocessed-dataset/
 __pycache__/
 pytorch-unet/
 *.pth
