@@ -1,6 +1,17 @@
 dataset/
 preprocessed-dataset/
+preprocessed-dataset-not-monochrome/
 __pycache__/
 pytorch-unet/
 *.pth
 .vscode
+new-dataset/
+new-preprocessed-dataset/
+new-augmented-dataset/
+augmented-dataset/
+model/
+final-dataset/
+test/
+test-result/
+test-dataset/
+old-dataset/
