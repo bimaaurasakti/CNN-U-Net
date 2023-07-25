@@ -3,6 +3,8 @@ import os
 import shutil
 from PIL import Image
 from tqdm.notebook import tqdm
+from matplotlib import pyplot as plt
+from functools import reduce
 
 
 def split_and_remove():

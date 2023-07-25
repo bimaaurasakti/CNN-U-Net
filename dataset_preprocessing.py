@@ -32,15 +32,13 @@ for dir_type in os.listdir(input_dir):
         # first dataset split to get test dataset
         if index < n_90_percent:
             filename_output_path = os.path.join(dir_type_output_path, filename)
-            # filename_output_path = os.path.join(final_dir, 'temp/' + dir_type + '/' + filename)  # for testing new dataset model
-            # break
         else:
             filename_output_path = os.path.join(final_dir, 'test/' + dir_type + '/' + filename)
 
         if filename.endswith(".jpg") or filename.endswith(".jpeg") or filename.endswith(".png"):            
             square_the_image(filename_input_path, filename_output_path)
-            # resize_image(filename_output_path, filename_output_path, 224, 224)
-            resize_image(filename_output_path, filename_output_path, 1024, 1024)
+            resize_image(filename_output_path, filename_output_path, 224, 224) # for testing new dataset model
+            # resize_image(filename_output_path, filename_output_path, 1024, 1024)
 
             if dir_type == "masking":
                 monochroming_image(filename_output_path, filename_output_path)
