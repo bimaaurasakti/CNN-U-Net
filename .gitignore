@@ -13,6 +13,9 @@ model/
 final-dataset/
 test/
 test-result/
+test-result-dataset/
+test-split-result-dataset/
+test-preprocessing-dataset/
 test-dataset/
 old-dataset/
 preprocessed-dataset-224/
@@ -21,3 +24,6 @@ augmented-dataset-224/
 augmented-dataset-1024/
 final-dataset-224/
 final-dataset-1024/
+backup/
+splitted-dataset/
+test.ipynb

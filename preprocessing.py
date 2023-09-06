@@ -3,6 +3,7 @@ import cv2
 from PIL import Image
 from helper import *
 import imageio
+from IPython.display import display
 
 
 def normalization(image, max, min):
@@ -28,13 +29,14 @@ def resize_image(input_dir, output_dir, desired_width = 100, desired_height = 10
     resized_image = original_image.resize((desired_width, desired_height))
     resized_image.save(output_dir)
 
-def square_the_image(filename_input_path, filename_output_path):
-    img = Image.open(filename_input_path)
-    size = max(img.size)
-    
-    new_img = Image.new("RGBA" if img.mode == "RGBA" else "RGB", (size, size), (0, 0, 0, 0) if img.mode == "RGBA" else (0, 0, 0))
-    new_img.paste(img, ((size - img.size[0]) // 2, (size - img.size[1]) // 2))
-    new_img.save(filename_output_path)
+def make_square(filename_input_path, filename_output_path, min_size=256):
+    im = Image.open(filename_input_path)
+    x, y = im.size
+    size = max(min_size, x, y)
+    new_im = Image.new('RGBA', (size, size), (0, 0, 0, 0))
+    new_im.paste(im, (int((size - x) / 2), int((size - y) / 2)))
+    new_im = new_im.convert('RGB')
+    new_im.save(filename_output_path)
 
 def monochroming_image(img_path, target_path):
     image_file = Image.open(img_path)
@@ -43,5 +45,5 @@ def monochroming_image(img_path, target_path):
     mask = image < 128
     image[mask] = 0
     image[~mask] = 255
-    
-    imageio.imwrite(target_path, image, format='png', compress_level=0)
+    new_im = Image.fromarray(image)
+    new_im.save(target_path)
