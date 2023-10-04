@@ -11,6 +11,7 @@ new-augmented-dataset/
 augmented-dataset/
 model/
 final-dataset/
+final-dataset-backup*
 test/
 test-result/
 test-result-dataset/

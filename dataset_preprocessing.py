@@ -66,6 +66,8 @@ for index, image_file in enumerate(image_files):
         filename_output_images_path = os.path.join(final_test_directory_images, image_file)
 
     make_square(filename_input_images_path, filename_output_images_path, 1024)
+    # resize_image_to_file(filename_output_images_path, filename_output_images_path, 1024, 1024)
+    # shutil.copyfile(filename_input_images_path, filename_output_images_path)
 
     pbar.update(1)
 
@@ -82,7 +84,9 @@ for index, mask_file in enumerate(mask_files):
         filename_output_masking_path = os.path.join(final_test_directory_masking, mask_file)
 
     make_square(filename_input_masking_path, filename_output_masking_path, 1024)
-    monochroming_image(filename_output_masking_path, filename_output_masking_path)
+    monochroming_image_to_file(filename_output_masking_path, filename_output_masking_path)
+    # resize_image_to_file(filename_output_masking_path, filename_output_masking_path, 1024, 1024)
+    # shutil.copyfile(filename_input_masking_path, filename_output_masking_path)
 
     pbar.update(1)
 

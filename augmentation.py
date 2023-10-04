@@ -1,6 +1,5 @@
 import Augmentor
 import os
-import shutil
 
 from tqdm.notebook import tqdm
 from PIL import Image

@@ -24,10 +24,15 @@ def adjust_gamma(image, gamma=1.0):
     
     return new_image
 
-def resize_image(input_dir, output_dir, desired_width = 100, desired_height = 100):     
+def resize_image_to_file(input_dir, output_dir, desired_width = 100, desired_height = 100):     
     original_image = Image.open(input_dir)
     resized_image = original_image.resize((desired_width, desired_height))
     resized_image.save(output_dir)
+
+def resize_image(input_np_array, desired_width=224, desired_height=224):
+    input_image = Image.fromarray(input_np_array)
+    resized_image = input_image.resize((desired_width, desired_height))
+    return np.array(resized_image)
 
 def make_square(filename_input_path, filename_output_path, min_size=256):
     im = Image.open(filename_input_path)
@@ -38,7 +43,7 @@ def make_square(filename_input_path, filename_output_path, min_size=256):
     new_im = new_im.convert('RGB')
     new_im.save(filename_output_path)
 
-def monochroming_image(img_path, target_path):
+def monochroming_image_to_file(img_path, target_path):
     image_file = Image.open(img_path)
     image = image_file.convert('L')
     image = np.array(image, dtype=np.uint8)
@@ -47,3 +52,13 @@ def monochroming_image(img_path, target_path):
     image[~mask] = 255
     new_im = Image.fromarray(image)
     new_im.save(target_path)
+
+def monochroming_image(input_np_array):
+    image = Image.fromarray(input_np_array)
+    image = image.convert('L')
+    image = np.array(image, dtype=np.uint8)
+    mask = input_np_array < 128
+    input_np_array[mask] = 0
+    input_np_array[~mask] = 255
+
+    return input_np_array
