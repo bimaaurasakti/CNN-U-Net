@@ -2,38 +2,38 @@ from augmentation import *
 from preprocessing import *
 
 # Split image process
-input_directory = 'dataset'
-output_directory = 'splitted-dataset'
+# input_directory = 'dataset'
+# output_directory = 'splitted-dataset'
 
-input_directory_images = os.path.join(input_directory, 'images/')
-input_directory_masking = os.path.join(input_directory, 'masking/')
-output_directory_images = os.path.join(output_directory, 'images/')
-output_directory_masking = os.path.join(output_directory, 'masking/')
+# input_directory_images = os.path.join(input_directory, 'images/')
+# input_directory_masking = os.path.join(input_directory, 'masking/')
+# output_directory_images = os.path.join(output_directory, 'images/')
+# output_directory_masking = os.path.join(output_directory, 'masking/')
 
-if not os.path.exists(output_directory_images):
-    os.makedirs(output_directory_images)
-    os.makedirs(output_directory_masking)
+# if not os.path.exists(output_directory_images):
+#     os.makedirs(output_directory_images)
+#     os.makedirs(output_directory_masking)
 
-image_files = os.listdir(input_directory_images)
-mask_files = os.listdir(input_directory_masking)
+# image_files = os.listdir(input_directory_images)
+# mask_files = os.listdir(input_directory_masking)
 
-total_iterations = len(image_files)
-pbar = tqdm(total=total_iterations, desc="Split into Four Images", unit="iter")
+# total_iterations = len(image_files)
+# pbar = tqdm(total=total_iterations, desc="Split into Four Images", unit="iter")
 
-for image_file, mask_file in zip(image_files, mask_files):
-    filename_input_images_path = os.path.join(input_directory_images, image_file)
-    filename_input_masking_path = os.path.join(input_directory_masking, mask_file)
+# for image_file, mask_file in zip(image_files, mask_files):
+#     filename_input_images_path = os.path.join(input_directory_images, image_file)
+#     filename_input_masking_path = os.path.join(input_directory_masking, mask_file)
 
-    split_into_four_parts(filename_input_images_path, output_directory_images)
-    split_into_four_parts(filename_input_masking_path, output_directory_masking)
+#     split_into_four_parts(filename_input_images_path, output_directory_images)
+#     split_into_four_parts(filename_input_masking_path, output_directory_masking)
 
-    pbar.update(1)
+#     pbar.update(1)
 
-pbar.close()
+# pbar.close()
 
 
 # Preprocessing process
-input_directory = 'splitted-dataset'
+input_directory = 'dataset'
 output_directory = 'preprocessed-dataset'
 final_test_directory = 'final-dataset/test'
 
@@ -65,8 +65,8 @@ for index, image_file in enumerate(image_files):
     else:
         filename_output_images_path = os.path.join(final_test_directory_images, image_file)
 
-    make_square(filename_input_images_path, filename_output_images_path, 1024)
-    # resize_image_to_file(filename_output_images_path, filename_output_images_path, 1024, 1024)
+    make_square(filename_input_images_path, filename_output_images_path, 224)
+    resize_image_to_file(filename_output_images_path, filename_output_images_path, 224, 224)
     # shutil.copyfile(filename_input_images_path, filename_output_images_path)
 
     pbar.update(1)
@@ -83,9 +83,9 @@ for index, mask_file in enumerate(mask_files):
     else:
         filename_output_masking_path = os.path.join(final_test_directory_masking, mask_file)
 
-    make_square(filename_input_masking_path, filename_output_masking_path, 1024)
+    make_square(filename_input_masking_path, filename_output_masking_path, 224)
+    resize_image_to_file(filename_output_masking_path, filename_output_masking_path, 224, 224)
     monochroming_image_to_file(filename_output_masking_path, filename_output_masking_path)
-    # resize_image_to_file(filename_output_masking_path, filename_output_masking_path, 1024, 1024)
     # shutil.copyfile(filename_input_masking_path, filename_output_masking_path)
 
     pbar.update(1)

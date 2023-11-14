@@ -62,3 +62,11 @@ def monochroming_image(input_np_array):
     input_np_array[~mask] = 255
 
     return input_np_array
+
+def changeMaskColor(input_np_array):
+    colored_mask = np.zeros((input_np_array.shape[0], input_np_array.shape[1], 3), dtype=np.uint8)
+    colored_mask[:, :, 0] = 0  # Komponen merah diatur ke 0
+    colored_mask[:, :, 1] = 0  # Komponen hijau diatur sesuai dengan masker hitam putih
+    colored_mask[:, :, 2] = input_np_array  # Komponen biru diatur ke 255
+
+    return colored_mask

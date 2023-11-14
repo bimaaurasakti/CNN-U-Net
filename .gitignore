@@ -28,3 +28,5 @@ final-dataset-1024/
 backup/
 splitted-dataset/
 test.ipynb
+original-dataset/
+unused-dataset/

@@ -19,7 +19,7 @@ def augment_images_in_directory():
     p.flip_top_bottom(probability=0.5)
 
     # Menentukan jumlah sampel yang dihasilkan
-    p.sample(10000)  # Misalnya, menghasilkan 10000 sampel gambar yang telah diaugmentasi
+    p.sample(3190)  # Misalnya, menghasilkan sampel gambar yang telah diaugmentasi
 
 def split_into_four_parts(image_file, output_location):
     image = Image.open(image_file)
