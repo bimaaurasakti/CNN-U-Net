@@ -29,7 +29,7 @@ def resize_image_to_file(input_dir, output_dir, desired_width = 100, desired_hei
     resized_image = original_image.resize((desired_width, desired_height))
     resized_image.save(output_dir)
 
-def resize_image(input_np_array, desired_width=224, desired_height=224):
+def resize_image(input_np_array, desired_width=1024, desired_height=1024):
     input_image = Image.fromarray(input_np_array)
     resized_image = input_image.resize((desired_width, desired_height))
     return np.array(resized_image)
