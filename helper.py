@@ -1,10 +1,14 @@
 import numpy as np
 import os
 import shutil
+import torch
+import torch.nn.functional as F
+
 from PIL import Image
 from tqdm.notebook import tqdm
 from matplotlib import pyplot as plt
 from functools import reduce
+from loss import dice_loss
 
 
 def split_and_remove():
@@ -85,3 +89,35 @@ def split_to_80_and_20(input_dir, type):
         pbar.update(1)
 
     pbar.close()
+
+def calc_loss(pred, target, metrics, bce_weight=0.5):
+    bce = F.binary_cross_entropy_with_logits(pred, target)
+
+    pred = F.sigmoid(pred)
+    dice = dice_loss(pred, target)
+
+    loss = bce * bce_weight + dice * (1 - bce_weight)
+
+    metrics['bce'] += bce.data.cpu().numpy() * target.size(0)
+    metrics['dice'] += dice.data.cpu().numpy() * target.size(0)
+    metrics['loss'] += loss.data.cpu().numpy() * target.size(0)
+
+    return loss
+
+def print_metrics(metrics, epoch_samples, phase):
+    outputs = []
+    for k in metrics.keys():
+        outputs.append("{}: {:4f}".format(k, metrics[k] / epoch_samples))
+
+    print("{}: {}".format(phase, ", ".join(outputs)))
+
+def tranform_binary(inp):
+    new_inp = torch.zeros((inp.shape[0], 1, inp.shape[2], inp.shape[3]))
+    for batch in range(new_inp.shape[0]):
+        for i in range(new_inp.shape[2]):
+            for j in range(new_inp.shape[3]):
+                if inp[batch, 0, i, j] > 0:
+                    new_inp[batch, 0, i, j] = 1
+                else:
+                    new_inp[batch, 0, i, j] = 0
+    return new_inp
