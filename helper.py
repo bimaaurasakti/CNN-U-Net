@@ -111,13 +111,35 @@ def print_metrics(metrics, epoch_samples, phase):
 
     print("{}: {}".format(phase, ", ".join(outputs)))
 
-def tranform_binary(inp):
-    new_inp = torch.zeros((inp.shape[0], 1, inp.shape[2], inp.shape[3]))
-    for batch in range(new_inp.shape[0]):
-        for i in range(new_inp.shape[2]):
-            for j in range(new_inp.shape[3]):
-                if inp[batch, 0, i, j] > 0:
-                    new_inp[batch, 0, i, j] = 1
-                else:
-                    new_inp[batch, 0, i, j] = 0
-    return new_inp
+# def tranform_binary(inp):
+#     new_inp = torch.zeros((inp.shape[0], 1, inp.shape[2], inp.shape[3]))
+#     for batch in range(new_inp.shape[0]):
+#         for i in range(new_inp.shape[2]):
+#             for j in range(new_inp.shape[3]):
+#                 if inp[batch, 0, i, j] > 0:
+#                     new_inp[batch, 0, i, j] = 1
+#                 else:
+#                     new_inp[batch, 0, i, j] = 0
+#     return new_inp
+
+def transform_binary(inp):
+    return (inp > 0).astype(int)
+
+def calculate_accuracy(predicts, labels):
+    # Mengonversi tensor PyTorch ke array NumPy
+    predicts = predicts.cpu().numpy().astype(int)
+    labels = labels.cpu().numpy().astype(int)
+
+    # Transformasi biner
+    predicts = transform_binary(predicts)
+
+    # Menghitung jumlah piksel yang benar dalam setiap batch
+    correct_predictions = (predicts == labels).sum(axis=(1, 2, 3))
+
+    # Menghitung total piksel dalam setiap batch
+    total_pixels = predicts.shape[1] * predicts.shape[2] * predicts.shape[3]
+
+    # Menghitung akurasi untuk setiap batch
+    accuracies = correct_predictions / total_pixels
+
+    return accuracies.tolist()
